@@ -20,7 +20,7 @@
 template <typename T, size_t N> class Vector : public std::array<T, N> {
 
 public:
-  T sum() {
+  T sum() const {
     T acc = 0;
     for (int i = 0; i < N; i++) {
       acc += (*this)[i];
@@ -28,9 +28,10 @@ public:
     return acc;
   };
 
-  T mean() { return sum() / N; };
+  T mean() const { return sum() / N; };
 
-  template <typename K, size_t M> Vector<T, N> operator+(Vector<K, M> &other) {
+  template <typename K, size_t M>
+  Vector<T, N> operator+(const Vector<K, M> &other) const {
     assert(M == N);
     Vector<T, N> res;
 
@@ -41,7 +42,8 @@ public:
     return res;
   };
 
-  template <typename K, size_t M> Vector<T, N> operator-(Vector<K, M> &other) {
+  template <typename K, size_t M>
+  Vector<T, N> operator-(const Vector<K, M> &other) const {
     assert(M == N);
     Vector<T, N> res;
 
@@ -52,7 +54,8 @@ public:
     return res;
   };
 
-  template <typename K, size_t M> Vector<T, N> operator*(Vector<K, M> &other) {
+  template <typename K, size_t M>
+  Vector<T, N> operator*(const Vector<K, M> &other) const {
     assert(M == N);
     Vector<T, N> res;
 
@@ -63,7 +66,8 @@ public:
     return res;
   };
 
-  template <typename K, size_t M> Vector<T, N> operator/(Vector<K, M> &other) {
+  template <typename K, size_t M>
+  Vector<T, N> operator/(const Vector<K, M> &other) const {
     assert(M == N);
     Vector<T, N> res;
 
@@ -75,7 +79,7 @@ public:
     return res;
   };
 
-  template <typename K, size_t M> T dot(Vector<K, M> &other) {
+  template <typename K, size_t M> T dot(const Vector<K, M> &other) const {
     assert(M == N);
     T res = 0;
 
@@ -88,7 +92,7 @@ public:
 
   // Does not make sense to use the templated type for the norm
   // since the sqrt is defined only for floats in C.
-  T norm() {
+  T norm() const {
     T norm = 0;
 
     for (int i = 0; i < N; i++) {
@@ -98,14 +102,15 @@ public:
     return std::sqrt(norm);
   }
 
-  template <typename K, size_t M> T proj(Vector<K, M> &other) {
+  template <typename K, size_t M> T proj(const Vector<K, M> &other) const {
     assert(M == N);
     return dot(other) / (other.norm());
   }
 
   // Now that I think of it, it's kind of similar to a matrix multiplication
   // with a sum after
-  template <typename K, size_t M> Vector<T, N> dense(Vector<K, M> &other) {
+  template <typename K, size_t M>
+  Vector<T, N> dense(const Vector<K, M> &other) const {
     Vector<T, N> res;
 
     for (int i = 0; i < N; i++) {
