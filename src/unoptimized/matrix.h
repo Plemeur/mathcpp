@@ -13,12 +13,12 @@ private:
   std::array<T, N * M> data;
 
 public:
-  const T &operator()(const size_t i, const size_t j) const {
+  inline const T &operator()(const size_t i, const size_t j) const {
     assert((i < N) && (j < M));
     return data[i * M + j];
   };
 
-  T &operator()(const size_t i, const size_t j) {
+  inline T &operator()(const size_t i, const size_t j) {
     assert((i < N) && (j < M));
     return data[i * M + j];
   };
@@ -52,7 +52,7 @@ public:
   }
 
   template <size_t L> Matrix<T, N, L> operator*(const Matrix<T, M, L> &other) {
-    Matrix<T, N, M> res;
+    Matrix<T, N, L> res;
 
     // C_ik = SUM_j A_ij * B_jk
     for (size_t i = 0; i < N; i++) {
@@ -65,6 +65,21 @@ public:
     }
     return res;
   }
+
+  Matrix<T, M, N> transpose() {
+    Matrix<T, M, N> res;
+
+    for (size_t i = 0; i < N; i++) {
+      for (size_t j = 0; j < M; j++) {
+        res(j, i) = (*this)(i, j);
+      }
+    }
+    return res;
+  }
+
+  static Matrix<T, M, N> transpose(Matrix<T, N, M> &mat) {
+    return mat.transpose();
+  };
 };
 
 template <typename T, size_t N, size_t M>

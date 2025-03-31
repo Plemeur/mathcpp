@@ -10,11 +10,13 @@ int main() {
   Matrix<int, 3, 3> B;
   B.init(std::array<int, 9>({9, 8, 7, 6, 5, 4, 3, 2, 1}));
 
-  Matrix<int, 3, 3> C;
-  C.init(std::array<int, 9>({1, 2, 3, 1, 2, 3, 1, 2, 3}));
+  Matrix<int, 3, 4> C;
+  C.init(std::array<int, 12>({1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4}));
 
   std::cout << B << std::endl;
   std::cout << A + B << std::endl;
   std::cout << A - B << std::endl;
   std::cout << A * C << std::endl;
+
+  std::cout << C.transpose() << std::endl;
 }
