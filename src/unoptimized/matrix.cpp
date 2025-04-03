@@ -19,4 +19,7 @@ int main() {
   std::cout << A * C << std::endl;
 
   std::cout << C.transpose() << std::endl;
+
+  std::cout << A.sum() << std::endl;
+  std::cout << A.sumOverRow() << std::endl;
 }

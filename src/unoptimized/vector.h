@@ -15,6 +15,9 @@
  *	Should add copy constructor from different types ?
  *
  *	probably never use the int version unless it's just mult/add
+ *
+ *	don't remember why I template the size of the other vector in the
+ *	basic operation, does not make sense
  */
 
 template <typename T, size_t N> class Vector : public std::array<T, N> {
@@ -80,6 +83,7 @@ public:
   };
 
   template <typename K, size_t M> T dot(const Vector<K, M> &other) const {
+
     assert(M == N);
     T res = 0;
 
@@ -120,6 +124,16 @@ public:
       }
     }
     return res;
+  }
+
+  T dist_L2(const Vector<T, N> other) const {
+    T res = 0;
+
+    for (int i = 0; i < N; i++) {
+      res += pow(((*this)[i] - other[i]), 2);
+    }
+
+    return sqrt(res);
   }
 };
 

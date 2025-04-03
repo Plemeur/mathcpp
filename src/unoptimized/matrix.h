@@ -33,7 +33,7 @@ public:
   }
   void init(const std::array<T, N * M> &initData) { data = initData; }
 
-  Matrix<T, N, M> operator+(const Matrix<T, N, M> &other) {
+  Matrix<T, N, M> operator+(const Matrix<T, N, M> &other) const {
     Matrix<T, N, M> res;
     for (int i = 0; i < N * M; i++) {
       res.data[i] = data[i] + other.data[i];
@@ -42,7 +42,7 @@ public:
     return res;
   }
 
-  Matrix<T, N, M> operator-(const Matrix<T, N, M> &other) {
+  Matrix<T, N, M> operator-(const Matrix<T, N, M> &other) const {
     Matrix<T, N, M> res;
     for (int i = 0; i < N * M; i++) {
       res.data[i] = data[i] - other.data[i];
@@ -51,7 +51,8 @@ public:
     return res;
   }
 
-  template <size_t L> Matrix<T, N, L> operator*(const Matrix<T, M, L> &other) {
+  template <size_t L>
+  Matrix<T, N, L> operator*(const Matrix<T, M, L> &other) const {
     Matrix<T, N, L> res;
 
     // C_ik = SUM_j A_ij * B_jk
@@ -66,7 +67,7 @@ public:
     return res;
   }
 
-  Matrix<T, M, N> transpose() {
+  Matrix<T, M, N> transpose() const {
     Matrix<T, M, N> res;
 
     for (size_t i = 0; i < N; i++) {
@@ -79,6 +80,26 @@ public:
 
   static Matrix<T, M, N> transpose(Matrix<T, N, M> &mat) {
     return mat.transpose();
+  };
+
+  T sum() const {
+    T res = 0;
+    for (T val : data) {
+      res += val;
+    }
+    return res;
+  }
+
+  Matrix<T, N, 1> sumOverRow() const {
+    Matrix<T, N, 1> res;
+
+    for (int i = 0; i < N; i++) {
+      res(i, 0) = 0;
+      for (int j = 0; j < N; j++) {
+        res(i, 0) += (*this)(i, j);
+      }
+    }
+    return res;
   };
 };
 

@@ -39,4 +39,7 @@ int main() {
   std::cout << test << std::endl;
 
   std::cout << a.dense(b) << std::endl;
+
+  std::cout << b.dist_L2(c) << std::endl;
+  std::cout << c.dist_L2(b) << std::endl;
 }
